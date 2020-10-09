@@ -1,5 +1,6 @@
 node('haimaxy-jnlp') {
     stage('Prepare') {
+        echo "${env}"
         echo "1.Prepare Stage"
         checkout scm
         script {
@@ -14,13 +15,13 @@ node('haimaxy-jnlp') {
     }
     stage('Build') {
         echo "3.Build Docker Image Stage"
-        sh "docker build -t cnych/jenkins-demo:${build_tag} ."
+        sh "docker build -t registry-vpc.cn-hangzhou.aliyuncs.com/cdsb/jenkins-demo:${build_tag} ."
     }
     stage('Push') {
         echo "4.Push Docker Image Stage"
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-            sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword}"
-            sh "docker push cnych/jenkins-demo:${build_tag}"
+            sh "docker login -u ${dockerHubUser} registry-vpc.cn-hangzhou.aliyuncs.com -p ${dockerHubPassword}"
+            sh "docker push registry-vpc.cn-hangzhou.aliyuncs.com/cdsb/jenkins-demo:${build_tag}"
         }
     }
     stage('Deploy') {
