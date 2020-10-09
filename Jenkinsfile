@@ -1,6 +1,6 @@
 node('haimaxy-jnlp') {
     stage('Prepare') {
-        echo "${env}"
+        sh 'printenv'
         echo "1.Prepare Stage"
         checkout scm
         script {
