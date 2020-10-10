@@ -30,7 +30,7 @@ node('haimaxy-jnlp') {
         if (git_branch =~ 'origin/master') {
             input "确认要部署线上环境吗？"
             sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
-            sh "sed -i 's/<BRANCH_NAME>/master/' k8s.yaml"
+            sh "sed -i 's/<BRANCH_NAME>/master12/' k8s.yaml"
             sh "kubectl apply -f k8s.yaml --record"
         }
     }
