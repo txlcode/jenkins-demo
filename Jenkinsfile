@@ -1,6 +1,3 @@
-parameters {
-        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'dev', name: 'BRANCH', type: 'PT_BRANCH'
-    }
 node('haimaxy-jnlp') {
     stage('Prepare') {
         echo "1.Prepare Stage"
@@ -9,7 +6,7 @@ node('haimaxy-jnlp') {
         checkout scm
         script {
             build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-            if ((git_branch =~ '*/master').matches()) {
+            if (git_branch == 'origin/master') {
                 build_tag = "$master-${build_tag}"
             }
         }
@@ -32,7 +29,7 @@ node('haimaxy-jnlp') {
     }
     stage('Deploy') {
         echo "5. Deploy Stage"
-        if ((git_branch =~ '*/master').matches()) {
+        if (git_branch =~ 'origin/master') {
             input "确认要部署线上环境吗？"
         }
         sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
