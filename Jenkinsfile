@@ -3,6 +3,7 @@ node('haimaxy-jnlp') {
         echo "1.Prepare Stage"
         echo "${git_branch}"
         echo "${test}"
+        sh 'printenv'
         checkout scm
         script {
             build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
