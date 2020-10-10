@@ -4,6 +4,7 @@ node('haimaxy-jnlp') {
         echo "${git_branch}"
         echo "${test}"
         checkout scm
+        sh 'printenv'
         script {
             build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
             if (git_branch == 'origin/master') {
