@@ -11,7 +11,7 @@ node('haimaxy-jnlp') {
                 build_tag = "${build_branch}-${build_tag}"
             }
         }
-        echo "build_branch"
+        echo "$build_branch"
         echo "$build_tag"
     }
     stage('Test') {
