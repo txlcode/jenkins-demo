@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins-demo
+  name: jenkins-demo-dev
   namespace: default
 spec:
   selector:
     matchLabels:
-      app: jenkins-demo
+      app: jenkins-demo-dev
   template:
     metadata:
       labels:
-        app: jenkins-demo
+        app: jenkins-demo-dev
     spec:
       containers:
       - image: registry-vpc.cn-hangzhou.aliyuncs.com/cdsb/jenkins-demo:<BUILD_TAG>
