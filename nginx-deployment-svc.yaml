@@ -46,6 +46,5 @@ spec:
     name: web
     targetPort: 80
     protocol: TCP
-    nodePort: 30900
   selector:
     name: nginx-jenkins
