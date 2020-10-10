@@ -1,14 +1,11 @@
 node('haimaxy-jnlp') {
     stage('Prepare') {
         echo "1.Prepare Stage"
-        echo "${git_branch}"
-        echo "${test}"
         checkout scm
-        sh 'printenv'
         script {
             build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-            if (git_branch == 'origin/master') {
-                build_tag = "master-${build_tag}"
+            if (env.BRANCH_NAME != 'master') {
+                build_tag = "${env.BRANCH_NAME}-${build_tag}"
             }
         }
     }
@@ -28,12 +25,11 @@ node('haimaxy-jnlp') {
     }
     stage('Deploy') {
         echo "5. Deploy Stage"
-        if (git_branch =~ 'origin/master') {
+        if (env.BRANCH_NAME == 'master') {
             input "确认要部署线上环境吗？"
-            sh "kubectl apply -f nginx-deployment-svc.yaml --record" 
-            //sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
-            //sh "sed -i 's/<BRANCH_NAME>/master12/' k8s.yaml"
-            //sh "kubectl apply -f k8s.yaml --record"
         }
+        sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
+        sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
+        sh "kubectl apply -f k8s.yaml --record"
     }
 }
