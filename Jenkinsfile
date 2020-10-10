@@ -1,13 +1,15 @@
 node('haimaxy-jnlp') {
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'dev', name: 'BRANCH', type: 'PT_BRANCH'
+    }
     stage('Prepare') {
         echo "1.Prepare Stage"
         echo "${git_branch}"
         echo "${test}"
-        sh 'printenv'
         checkout scm
         script {
             build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-            build_branch = sh(returnStdout: true, script: 'echo $git_branch |awk -F '/' '{print $2}'')
+            build_branch = "${params.BRANCH}"
             if ( build_branch == 'master') {
                 build_tag = "${build_branch}-${build_tag}"
             }
