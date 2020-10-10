@@ -1,7 +1,7 @@
-node('haimaxy-jnlp') {
-    parameters {
+parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'dev', name: 'BRANCH', type: 'PT_BRANCH'
     }
+node('haimaxy-jnlp') {
     stage('Prepare') {
         echo "1.Prepare Stage"
         echo "${git_branch}"
