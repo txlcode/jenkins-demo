@@ -7,11 +7,9 @@ node('haimaxy-jnlp') {
         script {
             build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
             if (git_branch == 'origin/master') {
-                build_tag = "$master-${build_tag}"
+                build_tag = "master-${build_tag}"
             }
         }
-        echo "$build_branch"
-        echo "$build_tag"
     }
     stage('Test') {
       echo "2.Test Stage"
