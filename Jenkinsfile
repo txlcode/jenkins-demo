@@ -7,7 +7,7 @@ node('haimaxy-jnlp') {
         checkout scm
         script {
             build_tag = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-            build_branch = sh(returnStdout: true, script: 'echo $git_branch |awk -F '/' '{print $2}'').trim()
+            build_branch = sh(returnStdout: true, script: "echo $git_branch |awk -F '/' '{print $2}'").trim()
             if ( build_branch == 'master') {
                 build_tag = "${build_branch}-${build_tag}"
             }
