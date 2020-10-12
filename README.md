@@ -1,2 +1,2 @@
-# jenkins-demo for master
+# jenkins-demo master
 some demo project for jenkins
